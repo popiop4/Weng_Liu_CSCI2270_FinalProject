@@ -18,6 +18,12 @@ for snakes and ladders game ./a.out slmap1.txt
 for graph operations ./a.out data1.txt or ./a.out data2.txt
 after the program executes, read menu to use the program
 
+DEPENDENCIES
+NONE
+
+SYSTEM REQUIREMENTS
+use CU CS Foundation VM Spring 2016 Version(Linux) on virtual machine
+
 GROUP MEMBERS
 Dingjun Weng, Jiawen Liu
 
