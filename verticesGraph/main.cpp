@@ -5,8 +5,7 @@ using namespace std;
 
 int main(int argc, char * argv[])
 {
-    char * fileName=argv[1];
-    verticesGraph cg(fileName);
+    verticesGraph cg(argv[1]);
 
     string option="-1";
 
@@ -15,107 +14,104 @@ int main(int argc, char * argv[])
         cout<<"----------"<<endl;
         cout<<"Main Menu"<<endl;
         cout<<"----------"<<endl;
-        cout<<"1. Assign districts"<<endl;
-        cout<<"2. Display"<<endl;
-        cout<<"3. Find distance"<<endl;
-        cout<<"4. Find shortest distance"<<endl;
-        cout<<"5. Find a path with limited distance"<<endl;
-        cout<<"6. Vertex information"<<endl;
-        cout<<"7. Graph information"<<endl;
-        cout<<"8. Add vertex"<<endl;
-        cout<<"9. Add edge"<<endl;
-        cout<<"@. Snakes and ladders"<<endl;
+        cout<<"1. Play \"Mansion Escape\""<<endl;
+        cout<<"2. Play \"Snakes and Ladders\""<<endl;
+        cout<<"3. Graph operations"<<endl;
         cout<<"0. Quit"<<endl;
         cin>>option;
         if(option=="1")
         {
-            cg.assignDistricts();
-            option="-1";
+            if(argv[1]!=NULL)
+            {
+                cout<<"Please restart the program without using files"<<endl;
+                option="-1";
+            }
+            else
+            {
+                cg.buildMansionEscape();
+                cg.mansionEscape();
+                return 0;
+            }
         }
         else if(option=="2")
         {
+            if(argv[1]==NULL)
+            {
+                cout<<"Please restart the program using a txt file for \"Snakes and Ladders\""<<endl;
+                option="-1";
+            }
 
-            cg.displayEverything();
-            option="-1";
+            else
+            {
+                cg.snakesAndLadders();
+                option="-1";
+            }
         }
         else if(option=="3")
         {
-            string starting,destination;
-            cin.ignore();
-            cout<<"Enter a starting vertex: "<<endl;
-            getline(cin,starting);
-            cout<<"Enter an ending vertex: "<<endl;
-            getline(cin,destination);
-            cout<<cg.findDistance(starting,destination)<<endl;
-            option="-1";
-        }
-        else if(option=="4")
-        {
-            string starting,destination;
-            cin.ignore();
-            cout<<"Enter a starting vertex: "<<endl;
-            getline(cin,starting);
-            cout<<"Enter an ending vertex: "<<endl;
-            getline(cin,destination);
-            cg.shortestDistance(starting,destination);
-            option="-1";
-        }
-        else if(option=="5")
-        {
-            string starting,destination;
-            int distance;
-            cin.ignore();
-            cout<<"Enter a starting vertex: "<<endl;
-            getline(cin,starting);
-            cout<<"Enter a destination vertex: "<<endl;
-            getline(cin,destination);
-            cout<<"Enter distance limit: "<<endl;
-            cin>>distance;
-            cg.limitedDistancePath(starting,destination,distance);
-            option="-1";
-        }
-        else if(option=="6")
-        {
-            string vertex;
-            cin.ignore();
-            cout<<"Enter a vertex's name: "<<endl;
-            getline(cin,vertex);
-            cg.vertexInformation(vertex);
-            option="-1";
-        }
-        else if(option=="7")
-        {
-            cg.graphInformation();
-            option="-1";
-        }
-        else if(option=="8")
-        {
-            string vertex;
-            cin.ignore();
-            cout<<"Enter a vertex's name: "<<endl;
-            getline(cin,vertex);
-            cg.addVertex(vertex);
-            option="-1";
-        }
-        else if(option=="9")
-        {
-            string v1,v2;
-            int weight;
-            cin.ignore();
-            cout<<"Enter the first vertex's name: "<<endl;
-            getline(cin,v1);
-            cout<<"Enter the second vertex's name: "<<endl;
-            getline(cin,v2);
-            cout<<"Enter the distance between them: "<<endl;
-            cin>>weight;
-            cg.addEdge(v1,v2,weight);
-            cg.addEdge(v2,v1,weight);
-            option="-1";
-        }
-        else if(option=="@")
-        {
-            cg.snakesAndLadders();
-            option="-1";
+            option="-3";
+            while(option=="-3")
+            {
+                cout<<endl;
+                cout<<"----------"<<endl;
+                cout<<"1. Assign districts"<<endl;
+                cout<<"2. Display"<<endl;
+                cout<<"3. Find distance"<<endl;
+                cout<<"4. Find shortest distance"<<endl;
+                cout<<"5. Find a path with limited distance"<<endl;
+                cout<<"0. Back"<<endl;
+                cin>>option;
+                if(option=="1")
+                {
+                    cg.assignDistricts();
+                    option="-3";
+                }
+                else if(option=="2")
+                {
+                    cg.displayEverything();
+                    option="-3";
+                }
+                else if(option=="3")
+                {
+                    string starting,destination;
+                    cin.ignore();
+                    cout<<"Enter a starting vertex: "<<endl;
+                    getline(cin,starting);
+                    cout<<"Enter an ending vertex: "<<endl;
+                    getline(cin,destination);
+                    cout<<cg.findDistance(starting,destination)<<endl;
+                    option="-3";
+                }
+                else if(option=="4")
+                {
+                    string starting,destination;
+                    cin.ignore();
+                    cout<<"Enter a starting vertex: "<<endl;
+                    getline(cin,starting);
+                    cout<<"Enter an ending vertex: "<<endl;
+                    getline(cin,destination);
+                    cg.shortestDistance(starting,destination);
+                    option="-3";
+                }
+                else if(option=="5")
+                {
+                    string starting,destination;
+                    int distance;
+                    cin.ignore();
+                    cout<<"Enter a starting vertex: "<<endl;
+                    getline(cin,starting);
+                    cout<<"Enter a destination vertex: "<<endl;
+                    getline(cin,destination);
+                    cout<<"Enter distance limit: "<<endl;
+                    cin>>distance;
+                    cg.limitedDistancePath(starting,destination,distance);
+                    option="-3";
+                }
+                else if(option=="0")
+                {
+                    option="-1";
+                }
+            }
         }
         else if(option=="0")
         {

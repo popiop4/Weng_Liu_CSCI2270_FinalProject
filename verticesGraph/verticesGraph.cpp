@@ -5,18 +5,16 @@
 #include <climits>
 #include <stdlib.h>
 #include <time.h>
+#include <algorithm>
 
 verticesGraph::verticesGraph(char * fileName)
 {
-    buildGraph(fileName);
+    buildGraphFile(fileName);
 };
 
 verticesGraph::verticesGraph(){};
 
-//verticesGraph::~verticesGraph(){};
-//array doesn't need to be destroyed?
-
-void verticesGraph::buildGraph(char * fileName)
+void verticesGraph::buildGraphFile(char * fileName)
 {
     std::string firstLine,lines;
     std::string itemArray[20][20];
@@ -264,66 +262,6 @@ void verticesGraph::limitedDistancePath(std::string starting,std::string destina
     }
 }
 
-void verticesGraph::vertexInformation(std::string v1)
-{
-    vertex * v=findVertex(v1);
-    std::cout<<"Name: "<<v->name<<std::endl;
-    std::cout<<"District: "<<v->district<<std::endl;
-    std::cout<<"Number of connected vertices: "<<v->adj.size()<<std::endl;
-    std::cout<<"Adjacent vertices: ";
-    for(int x=0;x<v->adj.size();x++)
-    {
-        std::cout<<v->adj[x].v->name;
-        if(x!=vertices[x].adj.size()-1)
-        {
-            std::cout<<" , ";
-        }
-    }
-    std::cout<<std::endl;
-}
-
-void verticesGraph::graphInformation()
-{
-    std::cout<<"Number of vertices: "<<vertices.size()<<std::endl;
-    int maxDistrict=vertices[0].district;
-    int maxConnections=vertices[0].adj.size();
-    for(int x=0;x<vertices.size();x++)
-    {
-        if(vertices[x].district>=maxDistrict)
-        {
-            maxDistrict=vertices[x].district;
-        }
-        if(vertices[x].adj.size()>=maxDistrict)
-        {
-            maxConnections=vertices[x].adj.size();
-        }
-    }
-    if(maxDistrict==-1)
-    {
-        maxDistrict=0;
-    }
-    std::cout<<"Number of districts: "<<maxDistrict<<std::endl;
-    std::vector<vertex> maxV;
-    std::cout<<"Vertex with most connections: ";
-    for(int x=0;x<vertices.size();x++)
-    {
-        if(vertices[x].adj.size()==maxConnections)
-        {
-            maxV.push_back(vertices[x]);
-        }
-    }
-    for(int y=0;y<maxV.size();y++)
-    {
-        std::cout<<maxV[y].name;
-        if(y!=maxV.size()-1)
-        {
-            std::cout<<" , ";
-        }
-    }
-    std::cout<<std::endl;
-    std::cout<<"with "<<maxConnections<<" connections"<<std::endl;
-}
-
 void verticesGraph::addVertex(std::string name)
 {
     bool found=false;
@@ -452,6 +390,48 @@ void verticesGraph::snakesAndLadders()
     }
 }
 
+void verticesGraph::buildMansionEscape()
+{
+    std::string places[15]={"Entry hall","Living Room","Dining Room","Kitchen","Game Room","Conservatory","Room 7","Library","Smoking Room","Observatory","Closet"
+                            ,"Ballroom","Cellar","Lounge","Front Entrance"};
+    for(int x=0;x<15;x++)
+    {
+        addVertex(places[x]);
+    }
+    std::vector<int> l1=randomNumberGenerate();
+    std::vector<int> l2=randomNumberGenerate();
+    std::vector<int> l3=randomNumberGenerate();
+    for(int y=0;y<l1.size();y++)
+    {
+        if(l1[y]!=l2[y])
+        {
+            addEdge(places[l1[y]],places[l2[y]],1);
+            addEdge(places[l2[y]],places[l1[y]],1);
+        }
+    }
+    for(int z=0;z<vertices.size();z++)
+    {
+        if(vertices[z].adj.size()==0)
+        {
+            addEdge(vertices[z].name,places[l3[z]],1);
+            addEdge(places[l3[z]],vertices[z].name,1);
+            addEdge(vertices[z].name,places[l1[z]],1);
+            addEdge(places[l3[z]],vertices[z].name,1);
+        }
+    }
+}
+
+std::vector<int> verticesGraph::randomNumberGenerate()
+{
+    std::vector<int> numbers;
+    for(int x=0;x<15;x++)
+    {
+        numbers.push_back(x);
+    }
+    std::random_shuffle(numbers.begin(),numbers.end());
+    return numbers;
+}
+
 int verticesGraph::findDistance(std::string v1,std::string v2)
 {
     if(findVertex(v1)==NULL||findVertex(v2)==NULL)
@@ -474,6 +454,85 @@ int verticesGraph::findDistance(std::string v1,std::string v2)
         }
     }
     return distance;
+}
+
+void verticesGraph::mansionEscape()
+{
+    srand(time(NULL));
+    int randomRoom=rand()%13+0;
+    vertex * player=findVertex(vertices[randomRoom].name);
+    std::string choice;
+    std::cin.ignore();
+    std::cout<<"----------"<<std::endl;
+    std::cout<<std::endl;
+    std::cout<<"You are trapped in a random room in a spooky mansion with 15 rooms."<<std::endl;
+    std::cout<<"Find the Front Entrance to escape the mansion."<<std::endl;
+    std::cout<<"Enter p to exit."<<std::endl;
+    std::cout<<std::endl;
+    while(player->name!="Front Entrance")
+    {
+        std::cout<<"You are at "<<player->name<<std::endl;
+        std::cout<<std::endl;
+        std::cout<<"Connected Rooms: "<<std::endl;
+        int adjSize=player->adj.size();
+        if(adjSize==2)
+        {
+            std::cout<<"q: "<<player->adj[0].v->name<<std::endl;
+            std::cout<<"w: "<<player->adj[1].v->name<<std::endl;
+        }
+        else if(adjSize==3)
+        {
+            std::cout<<"q: "<<player->adj[0].v->name<<std::endl;
+            std::cout<<"w: "<<player->adj[1].v->name<<std::endl;
+            std::cout<<"e: "<<player->adj[2].v->name<<std::endl;
+        }
+        else if(adjSize==4)
+        {
+            std::cout<<"q: "<<player->adj[0].v->name<<std::endl;
+            std::cout<<"w: "<<player->adj[1].v->name<<std::endl;
+            std::cout<<"e: "<<player->adj[2].v->name<<std::endl;
+            std::cout<<"r: "<<player->adj[3].v->name<<std::endl;
+        }
+        std::cout<<std::endl;
+        std::cout<<"Enter q/w/e/r"<<std::endl;
+        getline(std::cin,choice);
+        if(choice=="p")
+        {
+            return;
+        }
+        while(choice!="q"&&choice!="w"&&choice!="e"&&choice!="r")
+        {
+            if(choice=="p")
+            {
+                return;
+            }
+            std::cout<<"Destination not found. Please re-enter key"<<std::endl;
+            getline(std::cin,choice);
+        }
+        if(choice=="q")
+        {
+            player=findVertex(player->adj[0].v->name);
+        }
+        else if(choice=="w")
+        {
+            player=findVertex(player->adj[1].v->name);
+        }
+        else if(choice=="e"&&player->adj.size()>=3)
+        {
+            player=findVertex(player->adj[2].v->name);
+        }
+        else if(choice=="r"&&player->adj.size()==4)
+        {
+            player=findVertex(player->adj[3].v->name);
+        }
+        std::cout<<std::endl;
+        std::cout<<"----------"<<std::endl;
+        std::cout<<std::endl;
+    }
+    std::cout<<"You successfully escaped the spooky mansion! You win!"<<std::endl;
+    std::cout<<std::endl;
+    std::cout<<"----------"<<std::endl;
+    std::cout<<std::endl;
 }
 
 vertex * verticesGraph::findVertex(std::string name)
