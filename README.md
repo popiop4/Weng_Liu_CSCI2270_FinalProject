@@ -8,8 +8,6 @@ stores data into graph. The program can display graph, find shortest distance,
 path or a path with a distance limit between two vertices. The progam also
 has a mansion escape game and a snakes and ladders game.
 
----
-
 ### HOW TO RUN
 
 extract zip file
@@ -26,31 +24,21 @@ for mansion escape game		./a.out
 
 for snakes and ladders game	./a.out slmap1.txt
 
----
-
 ### DEPENDENCIES
 
 NONE
-
----
 
 ### SYSTEM REQUIREMENTS
 
 use CU CS Foundation VM Spring 2016 Version(Linux) on virtual machine
 
----
-
 ### GROUP MEMBERS
 
 Dingjun Weng, Jiawen Liu
 
----
-
 ### CONTRIBUTORS
 
 NONE
-
----
 
 ### OPEN ISSUES/BUGS
 
