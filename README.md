@@ -1,6 +1,6 @@
 # Weng_Liu_CSCI2270_FinalProject
 
-## PROJECT SUMMARY
+### PROJECT SUMMARY
 
 Our project "graph" is a C++ program that stores data into graph data
 structure, and does many types of operations. The program reads txt file and
@@ -8,7 +8,7 @@ stores data into graph. The program can display graph, find shortest distance,
 path or a path with a distance limit between two vertices. The progam also
 has a mansion escape game and a snakes and ladders game.
 
-## HOW TO RUN
+### HOW TO RUN
 
 extract zip file
 terminal:
@@ -18,21 +18,21 @@ for graph operations		./a.out data1.txt or ./a.out data2.txt
 for mansion escape game		./a.out
 for snakes and ladders game	./a.out slmap1.txt
 
-## DEPENDENCIES
+### DEPENDENCIES
 
 NONE
 
-## SYSTEM REQUIREMENTS
+### SYSTEM REQUIREMENTS
 
 use CU CS Foundation VM Spring 2016 Version(Linux) on virtual machine
 
-## GROUP MEMBERS
+### GROUP MEMBERS
 
 Dingjun Weng, Jiawen Liu
 
-## CONTRIBUTORS
+### CONTRIBUTORS
 
 NONE
 
-## OPEN ISSUES/BUGS
+### OPEN ISSUES/BUGS
 
