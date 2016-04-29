@@ -11,11 +11,17 @@ has a mansion escape game and a snakes and ladders game.
 ### HOW TO RUN
 
 extract zip file
+
 terminal:
+
 cd xxx/Weng_Liu_CSCI2270_FinalProject/graph
+
 g++ -std=c++11 main.cpp graph.cpp
+
 for graph operations		./a.out data1.txt or ./a.out data2.txt
+
 for mansion escape game		./a.out
+
 for snakes and ladders game	./a.out slmap1.txt
 
 ### DEPENDENCIES
