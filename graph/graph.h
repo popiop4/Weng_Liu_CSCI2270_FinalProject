@@ -40,8 +40,8 @@ class graph
         void addVertex(std::string name);
         void addEdge(std::string v1,std::string v2,int weight);
         void snakesAndLadders();
-        void buildMansionEscape();
-        void mansionEscape();
+        void buildRoomEscape();
+        void roomEscape();
         std::vector<int> randomNumberGenerate();
         int findAdjVerticesDistance(std::string v1,std::string v2);
         vertex * findVertex(std::string name);

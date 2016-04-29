@@ -318,83 +318,94 @@ void graph::snakesAndLadders()
     int minNumber=1;
     int die=0;
     int goal=vertices.size()-1;
-    srand(time(NULL));
+    std::srand(time(0));
     std::cout<<"Get to "<<goal+1<<" to win!"<<std::endl;
     std::cout<<"Press enter to continue"<<std::endl;
     std::cin.get();
-    while(player.position<vertices[goal].position&&cpp.position<vertices[goal].position)
+    while(player.position!=14&&cpp.position!=14)
     {
-        std::cout<<"You = "<<playerPosition+1<<" , "<<"Computer = "<<cppPosition+1;
+        std::cout<<"----------"<<std::endl;
+        std::cout<<"You   "<<playerPosition+1<<" , "<<"Computer   "<<cppPosition+1;
         std::cin.get();
         die=rand()%maxNumber+minNumber;
         playerPosition+=die;
-        if(playerPosition>=goal)
+        if(playerPosition==goal)
         {
-            std::cout<<"You roll a "<<die<<",   "<<playerPosition-die+1<<" --> "<<playerPosition+1<<std::endl;
+            std::cout<<"You roll a "<<die<<",   "<<"You   "<<playerPosition+1<<std::endl;
             std::cout<<"You get "<<playerPosition+1<<std::endl;
             std::cout<<"You win!"<<std::endl;
             return;
         }
-        else
+        else if(playerPosition<goal)
         {
             player=vertices[playerPosition];
-            std::cout<<"You roll a "<<die<<",   "<<playerPosition-die+1<<" --> "<<playerPosition+1<<std::endl;
+            std::cout<<"You roll a "<<die<<",   "<<"You   "<<playerPosition+1<<std::endl;
             if(player.adj.size()==1)
             {
                 if(player.adj[0].weight==1&&player.position>player.adj[0].v->position)
                 {
-                    std::cout<<"You hit a snake! You will go to "<<player.adj[0].v->position+1<<std::endl;
+                    std::cout<<"You hit a snake! You   "<<player.adj[0].v->position+1<<std::endl;
                     playerPosition=player.adj[0].v->position;
                     player=vertices[playerPosition];
                 }
                 else if(player.adj[0].weight==2&&player.position<player.adj[0].v->position)
                 {
-                    std::cout<<"You hit a ladder! You will go to "<<player.adj[0].v->position+1<<std::endl;
+                    std::cout<<"You hit a ladder! You   "<<player.adj[0].v->position+1<<std::endl;
                     playerPosition=player.adj[0].v->position;
                     player=vertices[playerPosition];
                 }
             }
         }
+        else
+        {
+            playerPosition=0;
+            std::cout<<"You roll a "<<die<<",   "<<"You   "<<0<<std::endl;
+        }
         std::cin.get();
         die=rand()%maxNumber+minNumber;
         cppPosition+=die;
-        if(cppPosition>=goal)
+        if(cppPosition==goal)
         {
-            std::cout<<"Computer rolls a "<<die<<",   "<<cppPosition-die+1<<" --> "<<cppPosition+1<<std::endl;
+            std::cout<<"Computer rolls a "<<die<<",   "<<"Computer   "<<cppPosition+1<<std::endl;
             std::cout<<"Computer gets "<<cppPosition+1<<std::endl;
             std::cout<<"Computer wins!"<<std::endl;
             return;
         }
-        else
+        else if(cppPosition<goal)
         {
             cpp=vertices[cppPosition];
-            std::cout<<"Computer rolls a "<<die<<",   "<<cppPosition-die+1<<" --> "<<cppPosition+1<<std::endl;
+            std::cout<<"Computer rolls a "<<die<<",   "<<"Computer   "<<cppPosition+1<<std::endl;
             if(cpp.adj.size()==1)
             {
                 if(cpp.adj[0].weight==1&&cpp.position>cpp.adj[0].v->position)
                 {
-                    std::cout<<"Computer hits a snake! Computer will go to "<<cpp.adj[0].v->position+1;
+                    std::cout<<"Computer hits a snake! Computer   "<<cpp.adj[0].v->position+1;
                     cppPosition=cpp.adj[0].v->position;
                     cpp=vertices[cppPosition];
                     std::cout<<std::endl;
                 }
                 else if(cpp.adj[0].weight==2&&cpp.position<cpp.adj[0].v->position)
                 {
-                    std::cout<<"Computer hits a ladder! Computer will go to "<<cpp.adj[0].v->position+1;
+                    std::cout<<"Computer hits a ladder! Computer   "<<cpp.adj[0].v->position+1;
                     cppPosition=cpp.adj[0].v->position;
                     cpp=vertices[cppPosition];
                     std::cout<<std::endl;
                 }
             }
         }
+        else
+        {
+            cppPosition=0;
+            std::cout<<"Computer rolls a "<<die<<",   "<<"Computer   "<<0<<std::endl;
+        }
         std::cout<<std::endl;
     }
 }
 
-void graph::buildMansionEscape()
+void graph::buildRoomEscape()
 {
-    std::string places[15]={"Entry hall","Living Room","Dining Room","Kitchen","Game Room","Conservatory","Room 7","Library","Smoking Room","Observatory","Closet"
-                            ,"Ballroom","Cellar","Lounge","Front Entrance"};
+    std::string places[15]={"Room 1","Room 2","Room 3","Room 4","Room 5","Room 6","Room 7","Room 8","Room 9","Room 10","Room 11","Room 12","Room 13","Room 14","Room 15"};
+    std::srand(time(0));
     for(int x=0;x<15;x++)
     {
         addVertex(places[x]);
@@ -458,24 +469,44 @@ int graph::findAdjVerticesDistance(std::string v1,std::string v2)
     return distance;
 }
 
-void graph::mansionEscape()
+void graph::roomEscape()
 {
-    srand(time(NULL));
-    int randomRoom=rand()%13+0;
-    vertex * player=findVertex(vertices[randomRoom].name);
-    std::string choice;
-    std::cin.ignore();
     std::cout<<"----------"<<std::endl;
+    std::cout<<"Enter p to exit"<<std::endl;
+    std::cout<<"You are trapped in a spooky place with 15 rooms. (Room 1, Room 2, ...)"<<std::endl;
+    std::cout<<"You want to escape"<<std::endl;
+    std::srand(time(0));
+    int rn1=rand()%14+0;
+    vertex * player=findVertex(vertices[rn1].name);
+    std::cout<<"You look up, and find you are in "<<player->name<<std::endl;
+    std::cout<<"Enter the room number you want to go"<<std::endl;
+    std::string key,choice;
+    std::cin.ignore();
+    getline(std::cin,choice);
+    std::stringstream ss(choice);
+    int number;
+    ss>>number;
+    while(number-1==rn1||number<1||number>15)
+    {
+        if(choice=="p")
+        {
+            return;
+        }
+        std::cout<<"Invalid input"<<std::endl;
+        std::cout<<"Enter the room number you want to go"<<std::endl;
+        getline(std::cin,choice);
+        std::stringstream ss(choice);
+        ss>>number;
+    }
+    vertex * goal=findVertex(vertices[number-1].name);
+    std::cout<<"You chose: "<<goal->name<<std::endl;
+    int rn2=rand()%5+5;
+    std::cout<<"You have "<<rn2<<" moves left to escape the place"<<std::endl;
+
     std::cout<<std::endl;
-    std::cout<<"You are trapped in a random room in a spooky mansion with 15 rooms."<<std::endl;
-    std::cout<<"Find the Front Entrance to escape the mansion."<<std::endl;
-    std::cout<<"Enter p to exit."<<std::endl;
-    std::cout<<std::endl;
-    while(player->name!="Front Entrance")
+    while(player->name!=goal->name&&rn2!=0)
     {
         std::cout<<"You are at "<<player->name<<std::endl;
-        std::cout<<std::endl;
-        std::cout<<"Connected Rooms: "<<std::endl;
         int adjSize=player->adj.size();
         if(adjSize==2)
         {
@@ -495,46 +526,51 @@ void graph::mansionEscape()
             std::cout<<"e: "<<player->adj[2].v->name<<std::endl;
             std::cout<<"r: "<<player->adj[3].v->name<<std::endl;
         }
-        std::cout<<std::endl;
         std::cout<<"Enter q/w/e/r"<<std::endl;
-        getline(std::cin,choice);
-        if(choice=="p")
+        getline(std::cin,key);
+        if(key=="p")
         {
             return;
         }
-        while(choice!="q"&&choice!="w"&&choice!="e"&&choice!="r")
-        {
-            if(choice=="p")
-            {
-                return;
-            }
-            std::cout<<"Destination not found"<<std::endl;
-            getline(std::cin,choice);
-        }
-        if(choice=="q")
+        if(key=="q")
         {
             player=findVertex(player->adj[0].v->name);
+            rn2-=1;
+            std::cout<<"You have "<<rn2<<" moves left!"<<std::endl;
         }
-        else if(choice=="w")
+        else if(key=="w")
         {
             player=findVertex(player->adj[1].v->name);
+            rn2-=1;
+            std::cout<<"You have "<<rn2<<" moves left!"<<std::endl;
         }
-        else if(choice=="e"&&player->adj.size()>=3)
+        else if(key=="e"&&player->adj.size()>=3)
         {
             player=findVertex(player->adj[2].v->name);
+            rn2-=1;
+            std::cout<<"You have "<<rn2<<" moves left!"<<std::endl;
         }
-        else if(choice=="r"&&player->adj.size()==4)
+        else if(key=="r"&&player->adj.size()==4)
         {
             player=findVertex(player->adj[3].v->name);
+            rn2-=1;
+            std::cout<<"You have "<<rn2<<" moves left!"<<std::endl;
         }
-        std::cout<<std::endl;
+        else
+        {
+            std::cout<<"Invalid input"<<std::endl;
+        }
         std::cout<<"----------"<<std::endl;
-        std::cout<<std::endl;
     }
-    std::cout<<"You successfully escaped the spooky mansion! You win!"<<std::endl;
-    std::cout<<std::endl;
+    if(player->name==goal->name&&rn2>=0)
+    {
+        std::cout<<"You successfully escaped the place! You win!"<<std::endl;
+    }
+    else
+    {
+        std::cout<<"You failed"<<std::endl;
+    }
     std::cout<<"----------"<<std::endl;
-    std::cout<<std::endl;
 }
 
 vertex * graph::findVertex(std::string name)

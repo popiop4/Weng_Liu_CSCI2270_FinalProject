@@ -25,7 +25,7 @@ int main(int argc, char * argv[])
         cout<<"1. Display"<<endl;
         cout<<"2. Find shortest distance"<<endl;
         cout<<"3. Find a path"<<endl;
-        cout<<"4. Play \"Mansion Escape\""<<endl;
+        cout<<"4. Play \"Room Escape\""<<endl;
         cout<<"5. Play \"Snakes and Ladders\""<<endl;
         cout<<"q. Quit"<<endl;
         cin>>option;
@@ -67,8 +67,8 @@ int main(int argc, char * argv[])
             }
             else
             {
-                cg.buildMansionEscape();
-                cg.mansionEscape();
+                cg.buildRoomEscape();
+                cg.roomEscape();
                 return 0;
             }
         }
