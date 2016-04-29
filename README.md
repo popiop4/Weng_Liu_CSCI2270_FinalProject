@@ -14,7 +14,7 @@ extract zip file
 
 terminal:
 
-cd xxx/Weng_Liu_CSCI2270_FinalProject/graph
+cd Weng_Liu_CSCI2270_FinalProject/graph
 
 g++ -std=c++11 main.cpp graph.cpp
 
