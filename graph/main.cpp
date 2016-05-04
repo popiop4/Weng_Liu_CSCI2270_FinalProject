@@ -1,4 +1,6 @@
 #include <iostream>
+#include <stdio.h>
+#include <string.h>
 #include "graph.h"
 
 using namespace std;
@@ -27,6 +29,7 @@ int main(int argc, char * argv[])
         cout<<"3. Find a path"<<endl;
         cout<<"4. Play \"Room Escape\""<<endl;
         cout<<"5. Play \"Snakes and Ladders\""<<endl;
+        cout<<"6. Enter in a new file to use"<<endl;
         cout<<"q. Quit"<<endl;
         cin>>option;
         if(option=="1")
@@ -74,7 +77,7 @@ int main(int argc, char * argv[])
         }
         else if(option=="5")
         {
-            if(argv[1]==NULL)
+            if(argv[1]==NULL&&displayFile == "NULL")
             {
                 cout<<"Restart the program using a txt file for \"Snakes and Ladders\""<<endl;
                 option="0";
@@ -85,6 +88,24 @@ int main(int argc, char * argv[])
                 cg.snakesAndLadders();
                 option="0";
             }
+        }
+        else if(option =="6"){
+            string filename;
+            cin.ignore();
+            cout<<"What file would you like to open?"<<endl;
+            getline(cin,filename);
+
+            char name[filename.size()+1];
+            strcpy(name, filename.c_str());
+
+            cg.~graph();
+            cg.buildGraphFile(name);
+
+            displayFile=filename;
+
+            option ="0";
+
+
         }
         else if(option=="q")
         {
